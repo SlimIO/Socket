@@ -1,0 +1,28 @@
+{
+  "name": "socket",
+  "version": "1.0.0",
+  "description": "Built-in Socket Addon",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SlimIO/Socket.git"
+  },
+  "keywords": [],
+  "author": "SlimIO",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SlimIO/Socket/issues"
+  },
+  "homepage": "https://github.com/SlimIO/Socket#readme",
+  "dependencies": {
+    "@slimio/addon": "^0.8.0"
+  },
+  "devDependencies": {
+    "@slimio/eslint-config": "^1.1.8",
+    "@types/node": "^10.12.0",
+    "eslint": "^5.7.0"
+  }
+}
