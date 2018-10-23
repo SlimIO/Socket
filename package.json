@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/SlimIO/Socket#readme",
   "dependencies": {
-    "@slimio/addon": "^0.8.0"
+    "@slimio/addon": "^0.10.0",
+    "protocol-buffers": "^4.1.0"
   },
   "devDependencies": {
     "@slimio/eslint-config": "^1.1.8",

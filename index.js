@@ -13,9 +13,17 @@ const Socket = new Addon("socket");
  * @returns {void}
  */
 function socketHandler(socket) {
-
     socket.on("data", (buf) => {
+        console.log("receiving data!");
         console.log(buf);
+    });
+
+    socket.on("close", () => {
+        console.log("socket closed!");
+    });
+
+    socket.on("error", (err) => {
+        console.error(err);
     });
 }
 
