@@ -21,19 +21,19 @@ function socketHandler(socket) {
                     const msg = {
                         uuid, complete: false, data, error: null
                     };
-                    socket.write(JSON.stringify(msg));
+                    socket.write(`${JSON.stringify(msg)}\n`);
                 },
                 error(err) {
                     const msg = {
                         uuid, complete: true, error: err
                     };
-                    socket.write(JSON.stringify(msg));
+                    ssocket.write(`${JSON.stringify(msg)}\n`);
                 },
                 complete() {
                     const msg = {
                         uuid, complete: true, error: null, data: null
                     };
-                    socket.write(JSON.stringify(msg));
+                    socket.write(`${JSON.stringify(msg)}\n`);
                 }
             });
         }
@@ -46,8 +46,8 @@ function socketHandler(socket) {
     socket.on("close", () => {
         // Do nothing
     });
-    socket.on("error", () => {
-        // Do nothing
+    socket.on("error", (err) => {
+        console.error(err);
     });
 }
 
