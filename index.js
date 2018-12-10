@@ -5,7 +5,7 @@ const { createServer } = require("net");
 const Addon = require("@slimio/addon");
 
 // Create Socket Addon
-const Socket = new Addon("socket");
+const Socket = new Addon("socket").lockOn("events");
 
 /**
  * @function socketHandler
