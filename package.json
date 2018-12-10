@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@slimio/eslint-config": "^2.0.3",
-    "@types/node": "^10.12.10",
-    "eslint": "^5.9.0"
+    "@types/node": "^10.12.12",
+    "eslint": "^5.10.0"
   }
 }
