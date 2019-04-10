@@ -29,7 +29,7 @@ function socketHandler(socket) {
                     const msg = {
                         uuid, complete: true, error: err
                     };
-                    ssocket.write(`${JSON.stringify(msg)}\n`);
+                    socket.write(`${JSON.stringify(msg)}\n`);
                 },
                 complete() {
                     const msg = {
