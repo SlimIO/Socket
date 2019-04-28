@@ -6,7 +6,7 @@ const Addon = require("@slimio/addon");
 
 // Create Socket Addon
 const Socket = new Addon("socket")
-    .lockOn("agent")
+    .lockOn("gate")
     .lockOn("events");
 
 /**
@@ -56,9 +56,10 @@ function socketHandler(socket) {
 /** @type {Socket.Server} */
 let server = null;
 
-Socket.on("start", () => {
+Socket.on("awake", () => {
     server = createServer(socketHandler);
     server.listen(1337);
+    Socket.ready();
 });
 
 Socket.on("stop", () => {
