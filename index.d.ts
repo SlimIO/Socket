@@ -1,4 +1,3 @@
-/// <reference types="node" />
 /// <reference types="@types/node" />
 
 import * as net from "net";
