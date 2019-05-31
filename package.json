@@ -14,7 +14,13 @@
     "type": "git",
     "url": "git+https://github.com/SlimIO/Socket.git"
   },
-  "keywords": [],
+  "keywords": [
+      "SlimIO",
+      "addon",
+      "socket",
+      "built-in",
+      "tcp"
+  ],
   "author": "SlimIO",
   "license": "MIT",
   "bugs": {
