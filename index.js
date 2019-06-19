@@ -9,15 +9,45 @@ const Socket = new Addon("socket")
     .lockOn("gate")
     .lockOn("events");
 
+// CONSTANTS
+const NULL_CHAR = "\0".charCodeAt(0);
+
 /**
  * @function socketHandler
  * @param {NodeJS.Socket} socket socket
  * @returns {void}
  */
 function socketHandler(socket) {
+    let tempBuf = [];
+
     socket.on("data", (buf) => {
+        let offset = 0;
+        let index;
+
+        while ((index = buf.indexOf(NULL_CHAR, offset)) !== -1) {
+            tempBuf.push(buf.slice(offset, index));
+            offset = index + 1;
+
+            const len = tempBuf.reduce((prev, curr) => prev + curr.length, 0);
+            const str = Buffer.concat(tempBuf, len).toString();
+            tempBuf = [];
+
+            try {
+                socket.emit("message", JSON.parse(str));
+            }
+            catch (err) {
+                console.log("failed to parse JSON:\n", str);
+            }
+        }
+
+        if (offset < buf.length) {
+            tempBuf.push(offset);
+        }
+    });
+
+    socket.on("message", (json) => {
         try {
-            const { uuid, callback, args } = JSON.parse(buf.toString());
+            const { uuid, callback, args } = json;
             Socket.sendMessage(callback, { args }).subscribe({
                 next(data) {
                     const msg = {
