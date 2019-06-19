@@ -41,7 +41,7 @@ function socketHandler(socket) {
         }
 
         if (offset < buf.length) {
-            tempBuf.push(offset);
+            tempBuf.push(buf.slice(offset));
         }
     });
 
