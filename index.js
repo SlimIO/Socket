@@ -46,6 +46,9 @@ function socketHandler(socket) {
     });
 
     socket.on("message", (json) => {
+        if (Socket.verbose) {
+            console.log(JSON.stringify(json, null, 4));
+        }
         try {
             const { uuid, callback, args } = json;
             Socket.sendMessage(callback, { args }).subscribe({
@@ -53,19 +56,19 @@ function socketHandler(socket) {
                     const msg = {
                         uuid, complete: false, data, error: null
                     };
-                    socket.write(`${JSON.stringify(msg)}\n`);
+                    socket.write(`${JSON.stringify(msg)}\0`);
                 },
                 error(err) {
                     const msg = {
                         uuid, complete: true, error: err
                     };
-                    socket.write(`${JSON.stringify(msg)}\n`);
+                    socket.write(`${JSON.stringify(msg)}\0`);
                 },
                 complete() {
                     const msg = {
                         uuid, complete: true, error: null, data: null
                     };
-                    socket.write(`${JSON.stringify(msg)}\n`);
+                    socket.write(`${JSON.stringify(msg)}\0`);
                 }
             });
         }
