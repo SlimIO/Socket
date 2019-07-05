@@ -60,7 +60,7 @@ function socketHandler(socket) {
                 },
                 error(err) {
                     const msg = {
-                        uuid, complete: true, error: err
+                        uuid, complete: true, error: err.message
                     };
                     socket.write(`${JSON.stringify(msg)}\0`);
                 },
