@@ -1,3 +1,5 @@
+"use strict";
+
 // Require NodeJS Dependencies
 const { createServer } = require("net");
 
