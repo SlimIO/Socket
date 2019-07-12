@@ -7,7 +7,7 @@ const { createServer } = require("net");
 const Addon = require("@slimio/addon");
 
 // Create Socket Addon
-const Socket = new Addon("socket")
+const Socket = new Addon("socket", { verbose: true })
     .lockOn("gate")
     .lockOn("events");
 
@@ -38,7 +38,7 @@ function socketHandler(socket) {
                 socket.emit("message", JSON.parse(str));
             }
             catch (err) {
-                console.log("failed to parse JSON:\n", str);
+                Socket.logger.writeLine(`failed to parse JSON:\n${str}`);
             }
         }
 
