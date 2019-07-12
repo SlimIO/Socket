@@ -34,7 +34,7 @@
     }
   },
   "dependencies": {
-    "@slimio/addon": "^0.17.1"
+    "@slimio/addon": "^0.18.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
