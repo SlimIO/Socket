@@ -48,9 +48,6 @@ function socketHandler(socket) {
     });
 
     socket.on("message", (json) => {
-        if (Socket.verbose) {
-            console.log(JSON.stringify(json, null, 4));
-        }
         try {
             const { uuid, callback, args } = json;
             Socket.sendMessage(callback, { args }).subscribe({
