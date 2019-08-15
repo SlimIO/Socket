@@ -13,6 +13,7 @@ const Socket = new Addon("socket", { verbose: true })
 
 // CONSTANTS
 const NULL_CHAR = "\0".charCodeAt(0);
+const BUF_WATERMARK = 32 * 1024;
 
 /**
  * @function socketHandler
@@ -27,11 +28,9 @@ function socketHandler(socket) {
         let index;
 
         while ((index = buf.indexOf(NULL_CHAR, offset)) !== -1) {
-            tempBuf.push(buf.slice(offset, index));
             offset = index + 1;
 
-            const len = tempBuf.reduce((prev, curr) => prev + curr.length, 0);
-            const str = Buffer.concat(tempBuf, len).toString();
+            const str = Buffer.concat([...tempBuf, buf.slice(offset, index)]).toString();
             tempBuf = [];
 
             try {
@@ -44,6 +43,11 @@ function socketHandler(socket) {
 
         if (offset < buf.length) {
             tempBuf.push(buf.slice(offset));
+            const len = tempBuf.reduce((prev, curr) => prev + curr.length, 0);
+            if (len > BUF_WATERMARK) {
+                tempBuf = [];
+                socket.end();
+            }
         }
     });
 
