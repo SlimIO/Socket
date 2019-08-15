@@ -28,9 +28,10 @@ function socketHandler(socket) {
         let index;
 
         while ((index = buf.indexOf(NULL_CHAR, offset)) !== -1) {
+            tempBuf.push(buf.slice(offset, index));
             offset = index + 1;
 
-            const str = Buffer.concat([...tempBuf, buf.slice(offset, index)]).toString();
+            const str = Buffer.concat(tempBuf).toString();
             tempBuf = [];
 
             try {
