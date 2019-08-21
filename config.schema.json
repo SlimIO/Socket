@@ -13,9 +13,9 @@
             "default": 1337
         },
         "socketWaterMark": {
-            "type": "number",
+            "type": ["string", "number"],
             "description": "Maximum socket data watermark in bytes",
-            "default": 32768
+            "default": "32KB"
         }
     }
 }

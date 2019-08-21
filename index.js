@@ -5,6 +5,7 @@ const { join } = require("path");
 const { createServer } = require("net");
 
 // Require Third-party Dependencies
+const bytes = require("bytes");
 const Addon = require("@slimio/addon");
 const Config = require("@slimio/config");
 
@@ -15,7 +16,7 @@ const Socket = new Addon("socket")
 
 // CONSTANTS
 const NULL_CHAR = "\0".charCodeAt(0);
-let BUF_WATERMARK = 32 * 1024;
+let BUF_WATERMARK = bytes("32KB");
 
 /**
  * @function socketHandler
@@ -103,7 +104,13 @@ Socket.on("awake", async() => {
     await cfg.read();
 
     cfg.observableOf("port").subscribe((port) => {
+        if (server !== null && server.address().port === port) {
+            return;
+        }
+
+        Socket.logger.writeLine(`assigning port '${port}' to the server`);
         if (server !== null) {
+            Socket.logger.writeLine("Reloading tcp server!");
             server.close();
         }
         server = createServer(socketHandler);
@@ -112,11 +119,22 @@ Socket.on("awake", async() => {
     }, (err) => Socket.logger.writeLine(String(err)));
 
     cfg.observableOf("verbose").subscribe((verbose) => {
+        if (Socket.verbose === verbose) {
+            return;
+        }
+
+        Socket.logger.writeLine(`verbosity updated to: ${verbose}`);
         Socket.verbose = verbose;
     }, (err) => Socket.logger.writeLine(String(err)));
 
-    cfg.observableOf("socketWaterMark").subscribe((watermark) => {
-        BUF_WATERMARK = watermark;
+    cfg.observableOf("socketWaterMark").subscribe((value) => {
+        const newWaterMark = typeof value === "number" ? value : bytes(value);
+        if (BUF_WATERMARK === newWaterMark) {
+            return;
+        }
+
+        Socket.logger.writeLine(`socket high water mark updated to: ${value}`);
+        BUF_WATERMARK = newWaterMark;
     }, (err) => Socket.logger.writeLine(String(err)));
 });
 
