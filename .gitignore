@@ -63,3 +63,4 @@ typings/
 db/
 jsdoc/
 docs/
+config.json

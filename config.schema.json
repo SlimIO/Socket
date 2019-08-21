@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
+    "properties": {
+        "verbose": {
+            "type": "boolean",
+            "description": "Enable addon verbose mode",
+            "default": false
+        },
+        "port": {
+            "type": "number",
+            "description": "Socket Server port",
+            "default": 1337
+        },
+        "socketWaterMark": {
+            "type": "number",
+            "description": "Maximum socket data watermark in bytes",
+            "default": 32768
+        }
+    }
+}

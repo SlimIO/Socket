@@ -1,19 +1,21 @@
 "use strict";
 
-// Require NodeJS Dependencies
+// Require Node.js Dependencies
+const { join } = require("path");
 const { createServer } = require("net");
 
 // Require Third-party Dependencies
 const Addon = require("@slimio/addon");
+const Config = require("@slimio/config");
 
 // Create Socket Addon
-const Socket = new Addon("socket", { verbose: true })
+const Socket = new Addon("socket")
     .lockOn("gate")
     .lockOn("events");
 
 // CONSTANTS
 const NULL_CHAR = "\0".charCodeAt(0);
-const BUF_WATERMARK = 32 * 1024;
+let BUF_WATERMARK = 32 * 1024;
 
 /**
  * @function socketHandler
@@ -93,13 +95,32 @@ function socketHandler(socket) {
 /** @type {Socket.Server} */
 let server = null;
 
-Socket.on("awake", () => {
-    server = createServer(socketHandler);
-    server.listen(1337);
-    Socket.ready();
+Socket.on("awake", async() => {
+    const cfg = new Config(join(__dirname, "config.json"), {
+        autoReload: true,
+        createOnNoEntry: true
+    });
+    await cfg.read();
+
+    cfg.observableOf("port").subscribe((port) => {
+        if (server !== null) {
+            server.close();
+        }
+        server = createServer(socketHandler);
+        server.listen(port);
+        Socket.ready();
+    }, (err) => Socket.logger.writeLine(String(err)));
+
+    cfg.observableOf("verbose").subscribe((verbose) => {
+        Socket.verbose = verbose;
+    }, (err) => Socket.logger.writeLine(String(err)));
+
+    cfg.observableOf("socketWaterMark").subscribe((watermark) => {
+        BUF_WATERMARK = watermark;
+    }, (err) => Socket.logger.writeLine(String(err)));
 });
 
-Socket.on("stop", () => {
+Socket.on("sleep", () => {
     if (server !== null) {
         server.close();
     }
