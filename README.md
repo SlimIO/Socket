@@ -30,14 +30,12 @@ async function main() {
 main().catch(console.error);
 ```
 
-## Roadmap
-- Add configuration file
-
 ## Dependencies
 
 |Name|Refactoring|Security Risk|Usage|
 |---|---|---|---|
 |[@slimio/addon](https://github.com/SlimIO/Addon#readme)|Minor|Low|Addon Container|
+|[@slimio/config](https://github.com/SlimIO/Config#readme)|Minor|Medium|Configuration loader|
 
 ## License
 MIT
