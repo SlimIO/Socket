@@ -36,6 +36,7 @@ main().catch(console.error);
 |---|---|---|---|
 |[@slimio/addon](https://github.com/SlimIO/Addon#readme)|Minor|Low|Addon Container|
 |[@slimio/config](https://github.com/SlimIO/Config#readme)|Minor|Medium|Configuration loader|
+|[bytes](https://github.com/visionmedia/bytes.js#readme)|Minor|Low|Utility to parse a string bytes (ex: 1TB) to bytes (1099511627776) and vice-versa|
 
 ## License
 MIT
