@@ -65,9 +65,9 @@ function socketHandler(socket) {
                     };
                     socket.write(`${JSON.stringify(msg)}\0`);
                 },
-                error(err) {
+                error(error) {
                     const msg = {
-                        uuid, complete: true, error: err.message
+                        uuid, complete: true, error: String(error)
                     };
                     socket.write(`${JSON.stringify(msg)}\0`);
                 },
@@ -85,12 +85,8 @@ function socketHandler(socket) {
         }
     });
 
-    socket.on("close", () => {
-        // Do nothing
-    });
-    socket.on("error", (err) => {
-        console.error(err);
-    });
+    socket.on("close", () => {});
+    socket.on("error", (err) => Socket.logger.writeLine(err.message));
 }
 
 /** @type {Socket.Server} */
