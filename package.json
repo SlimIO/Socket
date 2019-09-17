@@ -40,7 +40,8 @@
   "dependencies": {
     "@slimio/addon": "^0.21.1",
     "@slimio/config": "^0.14.1",
-    "bytes": "^3.1.0"
+    "bytes": "^3.1.0",
+    "secure-json-parse": "^1.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
