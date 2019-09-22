@@ -1,5 +1,5 @@
 {
-  "name": "socket",
+  "name": "@slimio/socket",
   "version": "1.0.0",
   "description": "Built-in Socket Addon",
   "main": "index.js",
