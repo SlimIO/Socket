@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@slimio/addon": "^0.21.1",
-    "@slimio/config": "^0.14.1",
+    "@slimio/config": "^0.15.0",
     "bytes": "^3.1.0",
     "secure-json-parse": "^1.0.0"
   },
