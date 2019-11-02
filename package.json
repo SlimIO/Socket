@@ -9,7 +9,7 @@
     "doc": "jsdoc -c ./jsdoc.json -r -R ./README.md -P ./package.json --verbose"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   },
   "repository": {
     "type": "git",
