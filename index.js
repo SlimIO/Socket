@@ -1,14 +1,16 @@
-"use strict";
-
 // Require Node.js Dependencies
-const { join } = require("path");
-const { createServer } = require("net");
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+import { createServer } from "net";
 
 // Require Third-party Dependencies
-const bytes = require("bytes");
-const Addon = require("@slimio/addon");
-const Config = require("@slimio/config");
-const { parse } = require("secure-json-parse");
+import bytes from "bytes";
+import Addon from "@slimio/addon";
+import Config from "@slimio/config";
+import secureJSONParse from "secure-json-parse";
+
+// Node.js constants
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // Create Socket Addon
 const Socket = new Addon("socket")
@@ -39,7 +41,7 @@ function socketHandler(socket) {
             tempBuf = [];
 
             try {
-                socket.emit("message", parse(str));
+                socket.emit("message", secureJSONParse.parse(str));
             }
             catch (err) {
                 Socket.logger.writeLine(`failed to parse JSON:\n${str}`);
@@ -142,4 +144,4 @@ Socket.on("sleep", () => {
     server = null;
 });
 
-module.exports = Socket;
+export default Socket;
